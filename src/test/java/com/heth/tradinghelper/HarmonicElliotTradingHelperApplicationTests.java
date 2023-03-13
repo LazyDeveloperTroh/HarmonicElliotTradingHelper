@@ -1,4 +1,4 @@
-package com.heth.harmonicelliottradinghelper;
+package com.heth.tradinghelper;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

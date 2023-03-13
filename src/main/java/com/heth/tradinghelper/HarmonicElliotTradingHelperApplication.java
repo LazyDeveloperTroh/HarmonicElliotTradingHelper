@@ -1,4 +1,4 @@
-package com.heth.harmonicelliottradinghelper;
+package com.heth.tradinghelper;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
