@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:~/heth
+    url: jdbc:h2:tcp://localhost/~/heth
     username: sa
     password:
     driver-class-name: org.h2.Driver
