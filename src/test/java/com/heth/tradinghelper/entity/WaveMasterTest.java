@@ -25,26 +25,35 @@ class WaveMasterTest {
     WaveMasterRepository repository;
 
     @Test
-    @DisplayName("자동 생성날짜, 수정날짜 테스트")
-    public void creatAndUpdateTest() {
+    @DisplayName("생성날짜, 수정날짜 Auditing 테스트")
+    public void creatAndUpdateTest() throws InterruptedException {
         WaveMaster wm = new WaveMaster();
         em.persist(wm);
+
+        em.flush();
+        em.clear();
 
         /**
          * 생성날짜, 수정날짜 설정확인
          */
-        assertNotNull(wm.getCreatedDate());
-        assertNotNull(wm.getLastModifiedDate());
-        assertTrue(wm.getCreatedDate().equals(wm.getLastModifiedDate()));
+        WaveMaster findWm1 = em.find(WaveMaster.class, wm.getId());
+        assertNotNull(findWm1.getCreatedDate());
+        assertNotNull(findWm1.getLastModifiedDate());
+        System.out.println("findWm1.getCreatedDate() = " + findWm1.getCreatedDate());
+        System.out.println("findWm1.getLastModifiedDate() = " + findWm1.getLastModifiedDate());
+        assertTrue(findWm1.getCreatedDate().equals(findWm1.getLastModifiedDate()));
 
         /**
          * 속성 변경 후 수정날짜 확인
          */
-        wm.setDirection(Direction.SIDE_TREND);
+        Thread.sleep(1000);
+        findWm1.setDirection(Direction.SIDE_TREND);
         em.flush();
         em.clear();
-        System.out.println("wm.getCreatedDate() = " + wm.getCreatedDate());
-        System.out.println("wm.getLastModifiedDate() = " + wm.getLastModifiedDate());
-        assertTrue(wm.getCreatedDate().compareTo(wm.getLastModifiedDate()) == -1);
+
+        WaveMaster findWm2 = em.find(WaveMaster.class, wm.getId());
+        System.out.println("findWm2.getCreatedDate() = " + findWm2.getCreatedDate());
+        System.out.println("findWm2.getLastModifiedDate() = " + findWm2.getLastModifiedDate());
+        assertTrue(wm.getCreatedDate().compareTo(findWm2.getLastModifiedDate()) == -1);
     }
 }
