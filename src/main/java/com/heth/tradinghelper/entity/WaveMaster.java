@@ -16,6 +16,8 @@ public class WaveMaster extends BaseTimeEntity {
 
     private Direction direction;
 
+    private String image;
+
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
