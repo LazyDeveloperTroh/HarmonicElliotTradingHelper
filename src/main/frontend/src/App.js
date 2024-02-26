@@ -1,5 +1,8 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
+import Header from './components/Header/Header.js';
+import Navigator from './components/Navigator/Navigator.js';
+import Contents from './components/Contents/Contents.js';
 
 function App() {
   const [hello, setHello] = useState('');
@@ -12,8 +15,12 @@ function App() {
   }, []);
 
   return (
-      <div className="App">
-        백엔드 데이터 : {hello}
+      <div className="App" style={{backgroundColor: '#f3f4f9'}}>
+          <Header></Header>
+          <div style={{display: "flex", justifyContent: "flex-start"}}>
+              <Navigator></Navigator>
+              <Contents></Contents>
+          </div>
       </div>
   )
 }
