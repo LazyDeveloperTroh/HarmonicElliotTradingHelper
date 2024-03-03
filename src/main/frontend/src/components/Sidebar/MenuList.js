@@ -1,80 +1,83 @@
 import * as React from 'react';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
-import {ListItemButton} from "@mui/material";
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import DraftsIcon from '@mui/icons-material/Drafts';
-import SendIcon from "@mui/icons-material/Send";
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StartBorder from '@mui/icons-material/StarBorder';
 import MenuItem from "./MenuItem";
 import Stack from "@mui/material/Stack";
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import SsidChartOutlinedIcon from '@mui/icons-material/SsidChartOutlined';
+import QueryStatsOutlinedIcon from '@mui/icons-material/QueryStatsOutlined';
+import StackedBarChartOutlinedIcon from '@mui/icons-material/StackedBarChartOutlined';
+import PersonIcon from '@mui/icons-material/Person';
 
 
-function MenuList(props) {
-    const [menuList, setMenuList] = React.useState([
+function MenuList() {
+    const [menuGroupList, setMenuGroupList] = React.useState([
         {
             title: 'Plan',
-            items: [
+            menuList: [
                 {
-                    title: 'plans',
-                    href:'/plans'
+                    title: 'Plans',
+                    icon: <ChecklistIcon sx={{fontSize: '1rem'}}/>,
+                    href:'/plans',
+                    subMenuList: [{
+                        title: '매매계획',
+                        href: '/plans/list'
+                    }]
                 },
                 {
-                    title: 'statistics',
+                    title: 'Statistics',
+                    icon: <StackedBarChartOutlinedIcon sx={{fontSize: '1rem'}}/>,
                     href:'/statistics'
                 }
             ]
         },
         {
-            title: 'Analysis',
-            items: [
+            title: 'Analyze',
+            menuList: [
                 {
-                    title: 'elliot wave',
-                    href:'/elliot wave'
+                    title: 'Elliot',
+                    icon: <SsidChartOutlinedIcon sx={{fontSize: '1rem'}}/>,
+                    href:'/elliot wave',
+                    subMenuList: [{
+                        title: '파동마스터',
+                        href: '/elliot/list'
+                    }]
                 },
                 {
-                    title: 'harmonic',
+                    title: 'Harmonic',
+                    icon: <QueryStatsOutlinedIcon sx={{fontSize: '1rem'}}/>,
                     href:'/harmonic'
                 }
             ]
         },
         {
             title: 'Settings',
-            items: [
+            menuList: [
                 {
-                    title: 'users',
+                    title: 'Users',
+                    icon: <PersonIcon sx={{fontSize: '1rem'}}/>,
                     href:'/users'
                 }
             ]
         }
     ]);
 
-    const [open, setOpen] = React.useState(false);
-    const handleClick = () => {
-        setOpen(!open);
-    }
-
     return (
             <Stack direction="column" spacing={3}>
-                {menuList.map((menu) => (
+                {menuGroupList.map((menuGroup) => (
                     <List
                         sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}
                         component="nav"
                         aria-labelledby="nested-list-subheader"
                         subheader={
-                            <ListSubheader component="div" id="nested-list-subheader">
-                                {menu.title}
+                            <ListSubheader component="div" id="nested-list-subheader" sx={{fontSize: '0.8rem'}}>
+                                {menuGroup.title}
                             </ListSubheader>
                         }
                     >
-
-                        {menu.items.map((menuItem) => (
-                            <MenuItem title={menuItem.title} subItem={false}/>
+                        {menuGroup.menuList.map((menu) => (
+                            <MenuItem title={menu.title} icon={menu.icon} subMenuList={menu.subMenuList}/>
                         ))}
                     </List>
                     ))}
