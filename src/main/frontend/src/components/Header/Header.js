@@ -1,10 +1,10 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
+import './header.css'
 
 function Header() {
-    return <div>
-        <header style={{backgroundColor:"red"}}>헤더입니다</header>
-    </div>;
+    return <header className="header">
+        헤더입니다
+    </header>;
 }
 
 export default Header;

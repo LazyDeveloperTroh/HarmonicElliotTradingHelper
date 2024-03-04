@@ -18,7 +18,7 @@ function MenuList() {
             menuList: [
                 {
                     title: 'Plans',
-                    icon: <ChecklistIcon sx={{fontSize: '1rem'}}/>,
+                    icon: <ChecklistIcon/>,
                     href:'/plans',
                     subMenuList: [{
                         title: '매매계획',
@@ -27,7 +27,7 @@ function MenuList() {
                 },
                 {
                     title: 'Statistics',
-                    icon: <StackedBarChartOutlinedIcon sx={{fontSize: '1rem'}}/>,
+                    icon: <StackedBarChartOutlinedIcon/>,
                     href:'/statistics'
                 }
             ]
@@ -37,7 +37,7 @@ function MenuList() {
             menuList: [
                 {
                     title: 'Elliot',
-                    icon: <SsidChartOutlinedIcon sx={{fontSize: '1rem'}}/>,
+                    icon: <SsidChartOutlinedIcon/>,
                     href:'/elliot wave',
                     subMenuList: [{
                         title: '파동마스터',
@@ -46,7 +46,7 @@ function MenuList() {
                 },
                 {
                     title: 'Harmonic',
-                    icon: <QueryStatsOutlinedIcon sx={{fontSize: '1rem'}}/>,
+                    icon: <QueryStatsOutlinedIcon/>,
                     href:'/harmonic'
                 }
             ]
@@ -56,7 +56,7 @@ function MenuList() {
             menuList: [
                 {
                     title: 'Users',
-                    icon: <PersonIcon sx={{fontSize: '1rem'}}/>,
+                    icon: <PersonIcon/>,
                     href:'/users'
                 }
             ]
@@ -71,7 +71,7 @@ function MenuList() {
                         component="nav"
                         aria-labelledby="nested-list-subheader"
                         subheader={
-                            <ListSubheader component="div" id="nested-list-subheader" sx={{fontSize: '0.8rem'}}>
+                            <ListSubheader component="div" id="nested-list-subheader">
                                 {menuGroup.title}
                             </ListSubheader>
                         }

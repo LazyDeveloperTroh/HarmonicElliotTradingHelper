@@ -6,9 +6,6 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import List from "@mui/material/List";
-import StartBorder from "@mui/icons-material/StarBorder";
-import createTheme from '@mui/system/createTheme';
-
 
 function MenuItem({title, icon, subMenuList}) {
     const [open, setOpen] = React.useState(false);
@@ -21,9 +18,9 @@ function MenuItem({title, icon, subMenuList}) {
                 <ListItemIcon sx={{minWidth: 30}}>
                     {icon}
                 </ListItemIcon>
-                <ListItemText primary={title} primaryTypographyProps={{fontSize: '0.7rem'}} />
+                <ListItemText primary={title}/>
                 {subMenuList &&
-                    (open ? <ExpandLess sx={{fontSize: '1rem', marginLeft: '5px'}}/> : <ExpandMore sx={{fontSize: '1rem'}}/>)}
+                    (open ? <ExpandLess sx={{ marginLeft: '5px'}}/> : <ExpandMore />)}
             </ListItemButton>
 
             {subMenuList &&
@@ -31,7 +28,7 @@ function MenuItem({title, icon, subMenuList}) {
                     {subMenuList.map((subMenu) => (
                         <List component={'div'} disablePadding>
                             <ListItemButton sx={{p1: 4}}>
-                                <ListItemText primary={subMenu.title} primaryTypographyProps={{fontSize: '0.7rem'}}></ListItemText>
+                                <ListItemText primary={subMenu.title} ></ListItemText>
                             </ListItemButton>
                         </List>
                     ))}

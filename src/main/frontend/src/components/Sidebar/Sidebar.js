@@ -1,10 +1,11 @@
 import React from 'react';
 import MenuList from './MenuList';
+import "./sidebar.css"
 
 function Sidebar() {
-    return <div style={{width: '10rem', height: '100%'}}>
+    return <nav className="sidebar">
         <MenuList />
-    </div>
+    </nav>
 }
 
 export default Sidebar;

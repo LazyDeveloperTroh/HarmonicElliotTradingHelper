@@ -3,6 +3,7 @@ import axios from "axios";
 import Header from './components/Header/Header.js';
 import Sidebar from './components/Sidebar/Sidebar.js';
 import Contents from './components/Contents/Contents.js';
+import Box from '@mui/material/Box';
 import "./App.css";
 
 function App() {
@@ -16,9 +17,9 @@ function App() {
   }, []);
 
   return (
-      <div className="App" style={{backgroundColor: '#f3f4f9'}}>
+      <div className="App">
           <Header></Header>
-          <div style={{display: "flex", justifyContent: "flex-start"}}>
+          <div className="container">
               <Sidebar></Sidebar>
               <Contents></Contents>
           </div>
