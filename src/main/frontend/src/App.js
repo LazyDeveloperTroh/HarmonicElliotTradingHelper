@@ -3,7 +3,7 @@ import axios from "axios";
 import Header from './components/Header/Header.js';
 import Sidebar from './components/Sidebar/Sidebar.js';
 import Contents from './components/Contents/Contents.js';
-import "./css/body.css"
+import "./App.css";
 
 function App() {
   const [hello, setHello] = useState('');
