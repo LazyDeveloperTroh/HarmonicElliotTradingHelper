@@ -4,7 +4,6 @@ import List from '@mui/material/List';
 import MenuItem from "./MenuItem";
 import Stack from "@mui/material/Stack";
 import ChecklistIcon from '@mui/icons-material/Checklist';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import SsidChartOutlinedIcon from '@mui/icons-material/SsidChartOutlined';
 import QueryStatsOutlinedIcon from '@mui/icons-material/QueryStatsOutlined';
 import StackedBarChartOutlinedIcon from '@mui/icons-material/StackedBarChartOutlined';
@@ -21,6 +20,12 @@ function MenuList() {
                     icon: <ChecklistIcon/>,
                     href:'/plans',
                     subMenuList: [{
+                        title: '매매계획',
+                        href: '/plans/list'
+                    },{
+                        title: '매매계획등록',
+                        href: '/plans/list'
+                    },{
                         title: '매매계획',
                         href: '/plans/list'
                     }]
@@ -41,6 +46,12 @@ function MenuList() {
                     href:'/elliot wave',
                     subMenuList: [{
                         title: '파동마스터',
+                        href: '/elliot/list'
+                    },{
+                        title: '파동등록',
+                        href: '/elliot/list'
+                    },{
+                        title: '파동동계',
                         href: '/elliot/list'
                     }]
                 },
@@ -67,7 +78,7 @@ function MenuList() {
             <Stack direction="column" spacing={3}>
                 {menuGroupList.map((menuGroup) => (
                     <List
-                        sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}
+                        sx={{bgcolor: 'background.paper'}}
                         component="nav"
                         aria-labelledby="nested-list-subheader"
                         subheader={

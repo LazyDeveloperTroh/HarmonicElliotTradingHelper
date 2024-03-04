@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuList from './MenuList';
+import MenuList from './menu/MenuList';
 import "./sidebar.css"
 
 function Sidebar() {

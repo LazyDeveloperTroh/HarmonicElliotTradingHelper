@@ -15,20 +15,20 @@ function MenuItem({title, icon, subMenuList}) {
     return (
         <div>
             <ListItemButton onClick={handleClick}>
-                <ListItemIcon sx={{minWidth: 30}}>
+                <ListItemIcon sx={{minWidth: '2em'}}>
                     {icon}
                 </ListItemIcon>
                 <ListItemText primary={title}/>
                 {subMenuList &&
-                    (open ? <ExpandLess sx={{ marginLeft: '5px'}}/> : <ExpandMore />)}
+                    (open ? <ExpandLess/> : <ExpandMore />)}
             </ListItemButton>
 
             {subMenuList &&
                 <Collapse in={open}  timeout="auto" unmountOnExit>
                     {subMenuList.map((subMenu) => (
-                        <List component={'div'} disablePadding>
-                            <ListItemButton sx={{p1: 4}}>
-                                <ListItemText primary={subMenu.title} ></ListItemText>
+                        <List component={'div'} sx={{marginLeft: '1em'}} disablePadding>
+                            <ListItemButton>
+                                ㆍ<ListItemText primary={subMenu.title} sx={{fontSize: '0.7em'}}></ListItemText>
                             </ListItemButton>
                         </List>
                     ))}
