@@ -75,10 +75,10 @@ function MenuList() {
     ]);
 
     return (
-            <Stack direction="column" spacing={3}>
+            <Stack direction="column" spacing={1}>
                 {menuGroupList.map((menuGroup) => (
                     <List
-                        sx={{bgcolor: 'background.paper'}}
+                        sx={{backgroundColor: 'background.paper'}}
                         component="nav"
                         aria-labelledby="nested-list-subheader"
                         subheader={

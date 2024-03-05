@@ -1,10 +1,12 @@
 import * as React from 'react';
-import './header.css'
+import Logo from './Logo'
+import Profile from "./Profile";
 
 function Header() {
-    return <header className="header">
-        헤더입니다
-    </header>;
+    return <header style={{height: "5%", display: "flex", justifyContent: "start"}}>
+        <Logo />
+        <Profile/>
+    </header>
 }
 
 export default Header;
