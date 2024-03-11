@@ -18,17 +18,7 @@ function MenuList() {
                 {
                     title: 'Plans',
                     icon: <ChecklistIcon/>,
-                    href:'/plans',
-                    subMenuList: [{
-                        title: '매매계획',
-                        href: '/plans/list'
-                    },{
-                        title: '매매계획등록',
-                        href: '/plans/list'
-                    },{
-                        title: '매매계획',
-                        href: '/plans/list'
-                    }]
+                    href:'/plans'
                 },
                 {
                     title: 'Statistics',
@@ -43,7 +33,6 @@ function MenuList() {
                 {
                     title: 'Elliot',
                     icon: <SsidChartOutlinedIcon/>,
-                    href:'/elliot wave',
                     subMenuList: [{
                         title: '파동마스터',
                         href: '/elliot/list'
@@ -88,7 +77,7 @@ function MenuList() {
                         }
                     >
                         {menuGroup.menuList.map((menu) => (
-                            <MenuItem title={menu.title} icon={menu.icon} subMenuList={menu.subMenuList}/>
+                            <MenuItem title={menu.title} icon={menu.icon} href={menu.href} subMenuList={menu.subMenuList}/>
                         ))}
                     </List>
                     ))}
