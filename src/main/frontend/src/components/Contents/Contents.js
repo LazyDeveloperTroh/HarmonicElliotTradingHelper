@@ -3,7 +3,7 @@ import TradingPrinciple from "./TradingPrinciple";
 import TradingTips from "./TradingTips";
 
 function Contents() {
-    return <main style={{width: "90%", backgroundColor: "#f3f4f9", borderRadius: "1.5em", padding: "2rem"}}>
+    return <main style={{height: "100%"}}>
         <div style={{display: "flex", height: "100%", gap: "10px"}}>
             <div style={{flex: "0 0 75%"}}>
                 <div style={{display: "flex", flexDirection: "column", height: "100%"}}>

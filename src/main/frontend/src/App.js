@@ -23,10 +23,12 @@ function App() {
               <Header></Header>
               <div className="container">
                   <Sidebar></Sidebar>
+                  <div style={{width: "90%", backgroundColor: "#f3f4f9", borderRadius: "0.5em", padding: "1rem"}}>
                   <Routes>
                       <Route path="/" element={<Contents/>} />
                       <Route path="/plans" element={<PlanList/>} />
                   </Routes>
+                  </div>
               </div>
           </div>
       </BrowserRouter>
