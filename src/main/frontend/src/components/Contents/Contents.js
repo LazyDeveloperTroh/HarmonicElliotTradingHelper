@@ -1,28 +1,27 @@
 import React from 'react';
 import TradingPrinciple from "./TradingPrinciple";
 import TradingTips from "./TradingTips";
+import {Grid} from "@mui/material";
 
 function Contents() {
     return <main style={{height: "100%"}}>
-        <div style={{display: "flex", height: "100%", gap: "10px"}}>
-            <div style={{flex: "0 0 75%"}}>
-                <div style={{display: "flex", flexDirection: "column", height: "100%"}}>
-                    <div style={{flex:"0 0 65%", backgroundColor: "red"}}></div>
-                    <div style={{flex:"0 0 35%"}}>
-                        <div style={{display: "flex", height: "100%"}}>
-                            <div style={{flex: "0 0 50%", backgroundColor: "green"}}></div>
-                            <div style={{flex: "0 0 50%", backgroundColor: "gray"}}></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style={{flex: "0 0 25%"}}>
-                <div style={{display: "flex", flexDirection: "column", gap: "10px"}}>
-                    <TradingPrinciple/>
-                    <TradingTips/>
-                </div>
-            </div>
-        </div>
+        <Grid container spacing={2} height={"100%"}>
+            <Grid item container md={9}>
+                <Grid item md={12} height={"50%"} style={{backgroundColor: "red"}}>
+                    11
+                </Grid>
+                <Grid item md={6} height={"50%"} style={{backgroundColor: "green"}}>
+                    22
+                </Grid>
+                <Grid item md={6} height={"50%"} style={{backgroundColor: "gray"}}>
+                    33
+                </Grid>
+            </Grid>
+            <Grid item container md={3}>
+                <TradingPrinciple/>
+                <TradingTips/>
+            </Grid>
+        </Grid>
     </main>;
 }
 
