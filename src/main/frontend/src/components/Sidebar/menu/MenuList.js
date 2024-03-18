@@ -8,6 +8,7 @@ import SsidChartOutlinedIcon from '@mui/icons-material/SsidChartOutlined';
 import QueryStatsOutlinedIcon from '@mui/icons-material/QueryStatsOutlined';
 import StackedBarChartOutlinedIcon from '@mui/icons-material/StackedBarChartOutlined';
 import PersonIcon from '@mui/icons-material/Person';
+import Divider from "@mui/material/Divider";
 
 
 function MenuList() {
@@ -71,14 +72,17 @@ function MenuList() {
                         component="nav"
                         aria-labelledby="nested-list-subheader"
                         subheader={
-                            <ListSubheader component="div" id="nested-list-subheader">
+                            <ListSubheader component="div" id="nested-list-subheader" style={{fontSize: "1.1rem", fontWeight: "bold"}}>
                                 {menuGroup.title}
                             </ListSubheader>
                         }
                     >
                         {menuGroup.menuList.map((menu) => (
+                            <div style={{marginLeft: "1rem"}}>
                             <MenuItem title={menu.title} icon={menu.icon} href={menu.href} subMenuList={menu.subMenuList}/>
+                            </div>
                         ))}
+                        <Divider component="li" style={{borderColor: "#e3e8ef"}}/>
                     </List>
                     ))}
             </Stack>

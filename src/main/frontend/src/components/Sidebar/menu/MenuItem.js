@@ -24,7 +24,7 @@ function MenuItem({title, icon, href, subMenuList}) {
     return (
         <div>
             <ListItemButton onClick={subMenuList ? handleClick : moveToPage} data-href={href}>
-                <ListItemIcon sx={{minWidth: '2em'}}>
+                <ListItemIcon sx={{minWidth: '2rem'}}>
                     {icon}
                 </ListItemIcon>
                 <ListItemText primary={title}/>
@@ -35,9 +35,9 @@ function MenuItem({title, icon, href, subMenuList}) {
             {subMenuList &&
                 <Collapse in={open}  timeout="auto" unmountOnExit>
                     {subMenuList.map((subMenu) => (
-                        <List component={'div'} sx={{marginLeft: '1em'}} disablePadding>
+                        <List component={'div'} sx={{marginLeft: '1rem'}} disablePadding>
                             <ListItemButton onClick={moveToPage} data-href={subMenu.href}>
-                                ㆍ<ListItemText primary={subMenu.title} sx={{fontSize: '0.7em'}}></ListItemText>
+                                ㆍ<ListItemText primary={subMenu.title} sx={{fontSize: '0.7rem'}}></ListItemText>
                             </ListItemButton>
                         </List>
                     ))}
