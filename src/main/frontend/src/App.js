@@ -12,15 +12,15 @@ function App() {
   return (
       <BrowserRouter>
           <div className="App">
-              <Grid container spacing={2} height={"100%"}>
+              <Grid container height={"100%"}>
                   <Grid item md={12} height={"10%"}>
                       <Header></Header>
                   </Grid>
-                  <Grid item container height={"90%"}>
+                  <Grid item container height={"90%"} columns={14} spacing={1}>
                       <Grid item md={2}>
                           <Sidebar></Sidebar>
                       </Grid>
-                      <Grid item md={10}>
+                      <Grid item md={12} style={{backgroundColor: "#eef2f6"}}>
                           <Routes>
                               <Route path="/" element={<Contents/>} />
                               <Route path="/plans" element={<PlanList/>} />
