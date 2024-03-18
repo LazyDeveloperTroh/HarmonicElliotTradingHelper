@@ -7,7 +7,7 @@ import {
     TableCell,
     TableBody,
     TablePagination,
-    InputLabel, Select, MenuItem, Button
+    InputLabel, Select, MenuItem, Button, IconButton, Grid
 } from "@mui/material";
 import FormControl from '@mui/material/FormControl';
 import EditIcon from '@mui/icons-material/Edit';
@@ -18,6 +18,9 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import {useNavigate} from "react-router-dom";
+import TradingPrinciple from "../TradingPrinciple";
+import TradingTips from "../TradingTips";
 
 
 const columns =[
@@ -58,14 +61,16 @@ const rows = [
     createData('19', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
     createData('20', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
     createData('21', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-
 ];
 
 function PlanList() {
     const [page, setPage] = React.useState(0);
+    const [ticker, setTicker] = React.useState('BTCUSDT');
+    const [result, setResult] = React.useState('');
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [startDate, setStartDate] = React.useState(dayjs('2022-04-17'));
     const [endDate, setEndDate] = React.useState(dayjs('2022-04-17'));
+    const navigate = useNavigate();
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -75,114 +80,131 @@ function PlanList() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     }
-
-    const handelCalendarClose = () => {
-        console.log(1111111)
+    const handleTicker = (event) => {
+        setTicker(event.target.value);
+    }
+    const handleResult = (event) => {
+        setResult(event.target.value ? event.target.value : "");
+    }
+    const handleAddBtn = () => {
+        navigate("/plans/add");
     }
 
     return (
-        <Paper sx={{height: "100%", overflow: 'hidden'}}>
-            <form>
-                <div style={{display: "flex", height: "10%", gap: "1rem", alignItems: "baseline", padding: "1rem 0.5rem"}}>
-                    <FormControl >
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={['DatePicker', 'DatePicker']}>
-                                <DatePicker
-                                    label="Start Date"
-                                    value={startDate}
-                                    slotProps={{textField: {size : 'small'}}}
-                                    onChange={(newValue) => setStartDate(newValue)}
-                                />
-                                <DatePicker
-                                    label="End Date"
-                                    value={endDate}
-                                    slotProps={{textField: {size : 'small'}}}
-                                    onChange={(newValue) => setEndDate(newValue)}
-                                />
-                            </DemoContainer>
-                        </LocalizationProvider>
-                    </FormControl>
-                    <FormControl>
-                        <InputLabel id="demo-simple-select-autowidth-label">종목</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-autowidth-label"
-                            id="demo-simple-select-autowidth"
-                            value={10}
-                            autoWidth
-                            label="종목"
-                            style={{height: '2.5rem'}}
-                        >
-                            <MenuItem value={10}>BTCUSDT</MenuItem>
-                            <MenuItem value={21}>ETHUSDT</MenuItem>
-                            <MenuItem value={22}>XRPUSDT</MenuItem>
-                        </Select>
-                    </FormControl>
+        <Paper sx={{height: "100%", padding: "inherit"}}>
+            <Grid container spacing={2} height={"10%"}>
+                <Grid item md={12}>
+                    <form>
+                        <div style={{display: "flex", gap: "1rem", alignItems: "baseline", }}>
+                            <FormControl >
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DemoContainer components={['DatePicker', 'DatePicker']}>
+                                        <DatePicker
+                                            label="Start Date"
+                                            value={startDate}
+                                            slotProps={{textField: {size : 'small'}}}
+                                            onChange={(newValue) => setStartDate(newValue)}
+                                        />
+                                        <DatePicker
+                                            label="End Date"
+                                            value={endDate}
+                                            slotProps={{textField: {size : 'small'}}}
+                                            onChange={(newValue) => setEndDate(newValue)}
+                                        />
+                                    </DemoContainer>
+                                </LocalizationProvider>
+                            </FormControl>
 
-                    <FormControl>
-                        <InputLabel id="demo-simple-select-autowidth-label">결과</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-autowidth-label"
-                            id="demo-simple-select-autowidth"
-                            value={10}
-                            autoWidth
-                            label="결과"
-                            style={{height: '2.5rem'}}
-                        >
-                            <MenuItem value={22}>대기</MenuItem>
-                            <MenuItem value={10}>승</MenuItem>
-                            <MenuItem value={21}>패</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <FormControl>
-                        <Button variant="contained">검색</Button>
-                    </FormControl>
-                </div>
-            </form>
-            <TableContainer sx={{width: "100%", height: "80%" }}>
-                <TableHead>
-                    <TableRow>
-                        {columns.map((column) => (
-                            <TableCell
-                                key={column.id}
-                                align={column.align}
-                                style={{width: column.width, fontWeight: "bold"}}
-                            >
-                                {column.label}
-                            </TableCell>
-                        ))}
-                        <TableCell align={"center"}><AddCircleIcon sx={{color:"#2196f3", verticalAlign: "middle"}}/></TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows
-                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((row) => {
-                            return (
-                                <TableRow hover role={"checkbox"} tabIndex={-1} key={row.code}>
-                                    {columns.map((column) => {
-                                        const value = row[column.id];
-                                        return (
-                                            <TableCell key={column.id} align={column.align}>
-                                                {value}
-                                            </TableCell>
-                                        )
-                                    })}
-                                    <TableCell align={"center"}><EditIcon/></TableCell>
-                                </TableRow>
-                            )
-                        })
-                    }
-                </TableBody>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOption={[10, 25, 100]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+                            <FormControl size={"small"}>
+                                <InputLabel id="demo-simple-select-autowidth-label">종목</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-autowidth-label"
+                                    id="demo-controlled-open-select"
+                                    value={ticker}
+                                    label="종목"
+                                    onChange={handleTicker}
+                                >
+                                    <MenuItem value={'BTCUSDT'}>BTCUSDT</MenuItem>
+                                    <MenuItem value={'ETHUSDT'}>ETHUSDT</MenuItem>
+                                    <MenuItem value={'XRPUSDT'}>XRPUSDT</MenuItem>
+                                </Select>
+                            </FormControl>
+
+                            <FormControl size={"small"} sx={{minWidth: 120 }} >
+                                <InputLabel id="demo-simple-select-helper-label" shrink={true}>결과</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-autowidth-label"
+                                    id="demo-controlled-open-select"
+                                    value={result}
+                                    displayEmpty
+                                    onChange={handleResult}
+                                >
+                                    <MenuItem value={''}><em>전체</em></MenuItem>
+                                    <MenuItem value={'WAIT'}>대기</MenuItem>
+                                    <MenuItem value={'WIN'}>승</MenuItem>
+                                    <MenuItem value={'LOSE'}>패</MenuItem>
+                                </Select>
+                            </FormControl>
+
+                            <FormControl>
+                                <Button variant="contained">검색</Button>
+                            </FormControl>
+                        </div>
+                    </form>
+                </Grid>
+                <Grid item md={12}>
+                    <TableContainer>
+                        <TableHead>
+                            <TableRow>
+                                {columns.map((column) => (
+                                    <TableCell
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{width: column.width, fontWeight: "bold"}}
+                                    >
+                                        {column.label}
+                                    </TableCell>
+                                ))}
+                                <TableCell align={"center"}>
+                                    <IconButton onClick={handleAddBtn}>
+                                        <AddCircleIcon sx={{color:"#2196f3", verticalAlign: "middle"}}/>
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((row) => {
+                                    return (
+                                        <TableRow hover role={"checkbox"} tabIndex={-1} key={row.code}>
+                                            {columns.map((column) => {
+                                                const value = row[column.id];
+                                                return (
+                                                    <TableCell key={column.id} align={column.align}>
+                                                        {value}
+                                                    </TableCell>
+                                                )
+                                            })}
+                                            <TableCell align={"center"}><EditIcon/></TableCell>
+                                        </TableRow>
+                                    )
+                                })
+                            }
+                        </TableBody>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOption={[10, 25, 100]}
+                        component="div"
+                        count={rows.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </Grid>
+
+            </Grid>
         </Paper>
     )
 }
