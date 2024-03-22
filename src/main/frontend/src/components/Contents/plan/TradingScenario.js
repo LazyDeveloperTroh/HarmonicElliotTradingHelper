@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Grid, TextField} from "@mui/material";
+import {Grid, InputLabel, TextField} from "@mui/material";
 
 function TradingScenario({title, }) {
     const itemData = [
@@ -54,7 +54,7 @@ function TradingScenario({title, }) {
     ];
 
     return <div>
-        <h2>{title}</h2>
+        <h3>{title}</h3>
         <Grid container >
             <Grid item md={9} sx={{backgroundColor: "#eaeaea"}}>
                 <div style={{display: "flex", overflow: "auto", flexWrap: "nowrap", gap: "1rem"}}>
@@ -82,14 +82,12 @@ function TradingScenario({title, }) {
             </Grid>
             <Grid item md={3} sx={{backgroundColor: "#eaeaea"}}>
                 <div style={{padding: "1rem 1rem"}}>
-                    <TextField
-                        id="outlined-multiline-static"
-                        label="참고"
-                        multiline
-                        fullWidth
-                        rows={13}
-                        defaultValue="Default Value"
-                    />
+                    <InputLabel id="remark-label" sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>타이틀</InputLabel>
+                    <TextField labelId="remark-label"
+                               InputLabelProps={{ shrink: true }}
+                               multiline
+                               fullWidth
+                               rows={13}/>
                 </div>
             </Grid>
         </Grid>

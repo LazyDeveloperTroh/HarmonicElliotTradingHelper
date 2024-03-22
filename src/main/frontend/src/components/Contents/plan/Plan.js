@@ -19,59 +19,57 @@ import TradingScenario from "./TradingScenario";
 function Plan() {
     return (
         <Paper component={"form"} elevation={3} sx={{height: "98%", padding: "inherit"}}>
-            <Grid container spacing={3}>
-                <Grid item md={12}>
-                    <TextField sx={{width: "60%"}} label={"Title"} size={"small"} focused
+            <Grid container spacing={2}>
+                <Grid item md={9}>
+                    <InputLabel id="title-label" sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>타이틀</InputLabel>
+                    <TextField labelId="title-label"
+                               InputLabelProps={{ shrink: true }}
+                               fullWidth
+                               size={"small"}
                                placeholder={"2024/04/01 $70,500 웻지 숏 전략"}/>
                 </Grid>
                 <Grid item container md={12} columnSpacing={3}>
                     <Grid item md={1}>
-                        <FormControl>
-                            <InputLabel id="demo-simple-select-label">Ticker</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value="10"
-                                label="Ticker"
-                                size={"small"}
-                            >
-                                <MenuItem value={10}>BTCUSDT</MenuItem>
-                                <MenuItem value={20}>ETHUSDT</MenuItem>
-                                <MenuItem value={30}>XRPUSDT</MenuItem>
-                            </Select>
-                        </FormControl>
+                        <InputLabel id="ticker-label" sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>Ticker</InputLabel>
+                        <Select
+                            labelId="ticker-label"
+                            InputLabelProps={{ shrink: true }}
+                            id="demo-simple-select"
+                            value="10"
+                            size={"small"}
+                        >
+                            <MenuItem value={10}>BTCUSDT</MenuItem>
+                            <MenuItem value={20}>ETHUSDT</MenuItem>
+                            <MenuItem value={30}>XRPUSDT</MenuItem>
+                        </Select>
                     </Grid>
                     <Grid item md={1}>
-                        <FormControl>
-                            <InputLabel id="demo-simple-select-label">Position</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value="LONG"
-                                label="Position"
-                                size={"small"}
-                            >
-                                <MenuItem value={"LONG"}>LONG</MenuItem>
-                                <MenuItem value={"SHORT"}>SHORT</MenuItem>
-                            </Select>
+                        <InputLabel id="position-label" sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>Position</InputLabel>
+                        <Select
+                            labelId="position-label"
+                            InputLabelProps={{ shrink: true }}
+                            id="demo-simple-select"
+                            value="LONG"
+                            size={"small"}
+                        >
+                            <MenuItem value={"LONG"}>LONG</MenuItem>
+                            <MenuItem value={"SHORT"}>SHORT</MenuItem>
+                        </Select>
+                    </Grid>
+                    <Grid item md={5.5}>
+                        <InputLabel id="demo-simple-select-label"  sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>진입 근거</InputLabel>
+                        <FormControl style={{flexDirection: "row"}}>
+                            <FormControlLabel control={<Checkbox />} label="카운팅"/>
+                            <FormControlLabel control={<Checkbox/>} label="다이버전스"/>
+                            <FormControlLabel control={<Checkbox/>} label="매물대"/>
+                            <FormControlLabel control={<Checkbox />} label="피보나치"/>
+                            <FormControlLabel control={<Checkbox />} label="지지/저항"/>
+                            <FormControlLabel control={<Checkbox/>} label="추세선"/>
+                            <FormControlLabel control={<Checkbox/>} label="캔들패턴"/>
                         </FormControl>
                     </Grid>
-                </Grid>
-                <Grid item md={12}>
-                    <InputLabel id="demo-simple-select-label">진입 근거</InputLabel>
-                    <FormControl style={{flexDirection: "row"}}>
-                        <FormControlLabel control={<Checkbox />} label="카운팅"/>
-                        <FormControlLabel control={<Checkbox/>} label="다이버전스"/>
-                        <FormControlLabel control={<Checkbox/>} label="매물대"/>
-                        <FormControlLabel control={<Checkbox />} label="피보나치"/>
-                        <FormControlLabel control={<Checkbox />} label="지지/저항"/>
-                        <FormControlLabel control={<Checkbox/>} label="추세선"/>
-                        <FormControlLabel control={<Checkbox/>} label="캔들패턴"/>
-                    </FormControl>
-                </Grid>
-                <Grid item md={12}>
-                    <FormControl>
-                        <FormLabel id="demo-row-radio-buttons-group-label">결과</FormLabel>
+                    <Grid item>
+                        <InputLabel id="demo-row-radio-buttons-group-label" sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>결과</InputLabel>
                         <RadioGroup
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
@@ -79,9 +77,9 @@ function Plan() {
                         >
                             <FormControlLabel value="WAITING" control={<Radio/>} label="대기"/>
                             <FormControlLabel value="WIN" control={<Radio/>} label="승"/>
-                            <FormControlLabel value="WIN" control={<Radio/>} label="패"/>
+                            <FormControlLabel value="LOSE" control={<Radio/>} label="패"/>
                         </RadioGroup>
-                    </FormControl>
+                    </Grid>
                 </Grid>
                 <Grid item md={12}>
                     <TradingPlanExecute title={"매매 계획"}/>
