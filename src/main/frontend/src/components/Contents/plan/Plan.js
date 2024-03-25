@@ -3,9 +3,9 @@ import {
     Checkbox,
     FormControl,
     FormControlLabel,
-    Grid,
+    Grid, InputAdornment,
     InputLabel,
-    MenuItem,
+    MenuItem, OutlinedInput,
     Paper,
     Radio,
     RadioGroup,
@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import ChartExplainList from "./chart/ChartExplainList";
 import TradingScenario from "./chart/TradingScenario";
+import Input from '@mui/material/Input';
+
 
 function Plan() {
     return (
@@ -22,17 +24,18 @@ function Plan() {
                 <Grid item md={9}>
                     <InputLabel id="title-label" sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>타이틀</InputLabel>
                     <TextField labelId="title-label"
-                               InputLabelProps={{ shrink: true }}
+                               InputLabelProps={{shrink: true}}
                                fullWidth
                                size={"small"}
                                placeholder={"2024/04/01 $70,500 웻지 숏 전략"}/>
                 </Grid>
                 <Grid item container md={12} columnSpacing={3}>
                     <Grid item md={1}>
-                        <InputLabel id="ticker-label" sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>Ticker</InputLabel>
+                        <InputLabel id="ticker-label"
+                                    sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>Ticker</InputLabel>
                         <Select
                             labelId="ticker-label"
-                            InputLabelProps={{ shrink: true }}
+                            InputLabelProps={{shrink: true}}
                             id="demo-simple-select"
                             value="10"
                             size={"small"}
@@ -43,10 +46,11 @@ function Plan() {
                         </Select>
                     </Grid>
                     <Grid item md={1}>
-                        <InputLabel id="position-label" sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>Position</InputLabel>
+                        <InputLabel id="position-label"
+                                    sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>Position</InputLabel>
                         <Select
                             labelId="position-label"
-                            InputLabelProps={{ shrink: true }}
+                            InputLabelProps={{shrink: true}}
                             id="demo-simple-select"
                             value="LONG"
                             size={"small"}
@@ -56,19 +60,21 @@ function Plan() {
                         </Select>
                     </Grid>
                     <Grid item md={5.5}>
-                        <InputLabel id="demo-simple-select-label"  sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>진입 근거</InputLabel>
+                        <InputLabel id="demo-simple-select-label" sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>진입
+                            근거</InputLabel>
                         <FormControl style={{flexDirection: "row"}}>
-                            <FormControlLabel control={<Checkbox />} label="카운팅"/>
+                            <FormControlLabel control={<Checkbox/>} label="카운팅"/>
                             <FormControlLabel control={<Checkbox/>} label="다이버전스"/>
                             <FormControlLabel control={<Checkbox/>} label="매물대"/>
-                            <FormControlLabel control={<Checkbox />} label="피보나치"/>
-                            <FormControlLabel control={<Checkbox />} label="지지/저항"/>
+                            <FormControlLabel control={<Checkbox/>} label="피보나치"/>
+                            <FormControlLabel control={<Checkbox/>} label="지지/저항"/>
                             <FormControlLabel control={<Checkbox/>} label="추세선"/>
                             <FormControlLabel control={<Checkbox/>} label="캔들패턴"/>
                         </FormControl>
                     </Grid>
                     <Grid item>
-                        <InputLabel id="demo-row-radio-buttons-group-label" sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>결과</InputLabel>
+                        <InputLabel id="demo-row-radio-buttons-group-label"
+                                    sx={{fontWeight: "bold", padding: "0.5rem 0rem"}}>결과</InputLabel>
                         <RadioGroup
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
@@ -89,44 +95,59 @@ function Plan() {
                 <Grid item container md={12}>
                     <Grid md={4}>
                         <TextField
-                            required
+                            type="number"
                             id="outlined-required"
                             label="1차 진입가격"
-                            defaultValue="Hello World"
+                            InputProps={{
+                                endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
                         />
                         <TextField
                             required
+                            type="number"
                             id="outlined-required"
                             label="2차 진입가격"
-                            defaultValue="Hello World"
+                            InputProps={{
+                                endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
                         />
                     </Grid>
                     <Grid md={4}>
                         <TextField
-                            required
+                            type="number"
                             id="outlined-required"
                             label="1차 익절가격"
-                            defaultValue="Hello World"
+                            InputProps={{
+                                endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
                         />
+
                         <TextField
-                            required
+                            type="number"
                             id="outlined-required"
                             label="2차 익절가격"
-                            defaultValue="Hello World"
+                            InputProps={{
+                                endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
                         />
                     </Grid>
                     <Grid md={4}>
                         <TextField
-                            required
+                            type="number"
                             id="outlined-required"
                             label="1차 손절가격"
-                            defaultValue="Hello World"
+                            InputProps={{
+                                endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
                         />
+
                         <TextField
-                            required
+                            type="number"
                             id="outlined-required"
                             label="2차 손절가격"
-                            defaultValue="Hello World"
+                            InputProps={{
+                                endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
                         />
                     </Grid>
                 </Grid>
