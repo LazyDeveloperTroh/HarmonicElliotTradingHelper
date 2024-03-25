@@ -3,7 +3,6 @@ import {
     Checkbox,
     FormControl,
     FormControlLabel,
-    FormLabel,
     Grid,
     InputLabel,
     MenuItem,
@@ -13,8 +12,8 @@ import {
     Select,
     TextField
 } from "@mui/material";
-import TradingPlanExecute from "./TradingPlanExecute";
-import TradingScenario from "./TradingScenario";
+import ChartExplainList from "./chart/ChartExplainList";
+import TradingScenario from "./chart/TradingScenario";
 
 function Plan() {
     return (
@@ -82,10 +81,10 @@ function Plan() {
                     </Grid>
                 </Grid>
                 <Grid item md={12}>
-                    <TradingPlanExecute title={"매매 계획"}/>
+                    <ChartExplainList title={"매매 계획"}/>
                 </Grid>
                 <Grid item md={12}>
-                    <TradingPlanExecute title={"매매 실행"}/>
+                    <ChartExplainList title={"매매 실행"}/>
                 </Grid>
                 <Grid item container md={12}>
                     <Grid md={4}>

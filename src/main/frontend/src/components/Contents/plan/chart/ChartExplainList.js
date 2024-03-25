@@ -1,9 +1,13 @@
 import * as React from 'react';
-import {Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, TextField} from "@mui/material";
-import "./TradingPlanExecute.css";
+import {Box, Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, TextField} from "@mui/material";
+import "./ChartExplainList.css";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import {Modal} from "@mui/base";
 
-function TradingPlanExecute({title, }) {
+
+function ChartExplainList({title, }) {
+    const [open, setOpen] = React.useState(false);
+    const [expandImageSrc, setExpandImageSrc] = React.useState("");
     const [itemData, setItemData] = React.useState([
         {
             id: 1,
@@ -67,6 +71,12 @@ function TradingPlanExecute({title, }) {
         }
     ]);
 
+    const handleOpen = function(imgSrc) {
+        setOpen(true);
+        setExpandImageSrc(imgSrc)
+    };
+    const handleClose = () => setOpen(false);
+
     const onRemove = (id) => {
         setItemData(
             itemData.filter(item => {
@@ -85,10 +95,10 @@ function TradingPlanExecute({title, }) {
                     gridAutoColumns: "minmax(300px, 1fr)"
                 }}>
                     {itemData.map((item) => (
-                        <ImageListItem key={item.id}>
+                        <ImageListItem key={item.id} className={"chartItem"} onClick={() => handleOpen(item.img)}>
                             <img
                                 srcSet={`${item.img}?w=300&fit=crop&auto=format&dpr=2 2x`}
-                                src={`${item.img}?w=248&fit=crop&auto=format`}
+                                src={`${item.img}?w=300&fit=crop&auto=format`}
                                 alt={item.title}
                                 loading="lazy"
                             />
@@ -100,37 +110,15 @@ function TradingPlanExecute({title, }) {
                                         sx={{color: 'rgba(255, 255, 255, 0.54)'}}
                                         aria-label={`info about ${item.title}`}
                                     >
-                                        <RemoveCircleOutlineIcon onClick={() => {onRemove(item.id)}}/>
+                                        <RemoveCircleOutlineIcon onClick={() => {
+                                            onRemove(item.id)
+                                        }}/>
                                     </IconButton>
                                 }
                             />
                         </ImageListItem>
                     ))}
                 </ImageList>
-                {/*<div style={{display: "flex", overflow: "auto", flexWrap: "nowrap", gap: "1rem"}}>*/}
-                {/*    {itemData.map((item) => (*/}
-                {/*        <div style={{textAlign: "center"}}>*/}
-                {/*            <img*/}
-                {/*                srcSet={`${item.img}?w=300&h=300&fit=crop&auto=format&dpr=2 2x`}*/}
-                {/*                src={`${item.img}?w=300&h=300&fit=crop&auto=format`}*/}
-                {/*                loading="lazy"*/}
-                {/*                style={{border: "solid 2px gray"}}*/}
-                {/*            />*/}
-                {/*            <h4>이미지 이름</h4>*/}
-                {/*        </div>*/}
-                {/*    ))}*/}
-                {/*    <div*/}
-                {/*        className={"addBtn"}*/}
-                {/*        style={{minWidth: "300px", height: "300px", border: "1px solid #e3e8ef", position: "relative", cursor: "pointer"}}>*/}
-                {/*        <div*/}
-                {/*            style={{*/}
-                {/*                position: "absolute", top: "50%", left: "50%", fontSize: "5rem",*/}
-                {/*                fontWeight: "bold", transform: "translate(-50%, -50%)"*/}
-                {/*            }}>*/}
-                {/*            +*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </Grid>
             <Grid item md={3}>
                 <div style={{padding: "1rem 1rem"}}>
@@ -145,7 +133,34 @@ function TradingPlanExecute({title, }) {
                 </div>
             </Grid>
         </Grid>
+        <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: "90%",
+                height: "90%",
+                bgcolor: 'background.paper',
+                boxShadow: 24,
+                p: 1,
+                zIndex: 2
+            }}>
+                <img
+                    id={"expandImage"}
+                    src={expandImageSrc}
+                    width={"100%"}
+                    height={"100%"}
+                    loading="lazy"
+                />
+            </Box>
+        </Modal>
     </div>;
 }
 
-export default TradingPlanExecute;
+export default ChartExplainList;
