@@ -1,0 +1,21 @@
+.upload {
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    border-radius: 4px;
+    border: 3px dashed #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.upload:hover {
+    border-color: #111;
+}
+
+.upload.active {
+    background-color: #efeef3;
+    border-color: #111;
+}
