@@ -25,24 +25,18 @@ function ChartExplainList({title}) {
     }
 
     const addChart = (event) => {
-        const file = event.target.files[0];
-        setItemData([...itemData, {
-                    id: file.name,
-                    img: URL.createObjectURL(file),
-                    title: file.name
-                }]);
-    }
-
-    const dropChart = (event) => {
+        event.stopPropagation();
         event.preventDefault();
 
-        const file = event.dataTransfer.files[0];
-        console.log(file)
-        setItemData([...itemData, {
-            id: file.name,
-            img: URL.createObjectURL(file),
-            title: file.name
-        }]);
+        let uploadFiles = [];
+        Array.from(event.dataTransfer.files).map((file) => {
+            uploadFiles.push({
+                id: file.name,
+                img: URL.createObjectURL(file),
+                title: file.name
+            })
+        })
+        setItemData([...itemData, ...uploadFiles]);
     }
 
     return <div>
@@ -80,7 +74,7 @@ function ChartExplainList({title}) {
                         </ImageListItem>
                     ))}
                     <ImageListItem key={""} >
-                        <FileUpload onChange={addChart} onDrop={dropChart}/>
+                        <FileUpload onChange={addChart} />
                     </ImageListItem>
                 </ImageList>
             </Grid>
@@ -119,6 +113,7 @@ function ChartExplainList({title}) {
                     src={expandImageSrc}
                     width={"100%"}
                     height={"100%"}
+                    alt={""}
                     loading="lazy"
                 />
             </Box>
