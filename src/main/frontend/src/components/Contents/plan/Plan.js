@@ -3,9 +3,10 @@ import {
     Checkbox,
     FormControl,
     FormControlLabel,
-    Grid, InputAdornment,
+    Grid,
+    InputAdornment,
     InputLabel,
-    MenuItem, OutlinedInput,
+    MenuItem,
     Paper,
     Radio,
     RadioGroup,
@@ -13,8 +14,6 @@ import {
     TextField
 } from "@mui/material";
 import ChartExplainList from "./chart/ChartExplainList";
-import TradingScenario from "./chart/TradingScenario";
-import Input from '@mui/material/Input';
 
 
 function Plan() {
@@ -160,7 +159,6 @@ function Plan() {
                                 multiline
                                 fullWidth
                                 rows={5}
-                                defaultValue="Default Value"
                             />
                         </div>
                     </Grid>
@@ -172,22 +170,21 @@ function Plan() {
                                 multiline
                                 fullWidth
                                 rows={5}
-                                defaultValue="Default Value"
                             />
                         </div>
                     </Grid>
                 </Grid>
                 <Grid item md={12}>
-                    <TradingScenario title={"단기 시나리오"}/>
+                    <ChartExplainList title={"단기 시나리오"}/>
                 </Grid>
                 <Grid item md={12}>
-                    <TradingScenario title={"중ㆍ단기 시나리오"}/>
+                    <ChartExplainList title={"중ㆍ단기 시나리오"}/>
                 </Grid>
                 <Grid item md={12}>
-                    <TradingScenario title={"중기 시나리오"}/>
+                    <ChartExplainList title={"중기 시나리오"}/>
                 </Grid>
                 <Grid item md={12}>
-                    <TradingScenario title={"장기 시나리오"}/>
+                    <ChartExplainList title={"장기 시나리오"}/>
                 </Grid>
             </Grid>;
         </Paper>

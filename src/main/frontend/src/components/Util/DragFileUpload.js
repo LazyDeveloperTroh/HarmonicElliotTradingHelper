@@ -1,8 +1,8 @@
 import * as React from 'react'
 import {CloudUpload} from "@mui/icons-material";
-import "./FileUpload.css"
+import "./DragFileUpload.css"
 
-function FileUpload({onChange}) {
+function DragFileUpload({onChange}) {
     const [isActive, setActive] = React.useState(false);
     const handleDragStart = () => setActive(true)
     const handleDragEnd = () => setActive(false)
@@ -24,4 +24,4 @@ function FileUpload({onChange}) {
     </label>;
 }
 
-export default FileUpload;
+export default DragFileUpload;

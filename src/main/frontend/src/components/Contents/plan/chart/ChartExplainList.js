@@ -3,7 +3,7 @@ import {Box, Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, TextF
 import "./ChartExplainList.css";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import {Modal} from "@mui/base";
-import FileUpload from "../../../Util/FileUpload";
+import DragFileUpload from "../../../Util/DragFileUpload";
 
 function ChartExplainList({title}) {
     const [open, setOpen] = React.useState(false);
@@ -74,7 +74,7 @@ function ChartExplainList({title}) {
                         </ImageListItem>
                     ))}
                     <ImageListItem key={""} >
-                        <FileUpload onChange={addChart} />
+                        <DragFileUpload onChange={addChart} />
                     </ImageListItem>
                 </ImageList>
             </Grid>
