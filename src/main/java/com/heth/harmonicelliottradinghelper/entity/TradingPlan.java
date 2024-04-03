@@ -5,14 +5,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Getter
 public class TradingPlan extends BaseEntity{
     @Id
@@ -27,8 +27,8 @@ public class TradingPlan extends BaseEntity{
     private Double targetPrice1;
     private Double targetPrice2;
     private Double targetPrice3;
-    private Double stoplossPrice1;
-    private Double stoplossPrice2;
+    private Double stopLossPrice1;
+    private Double stopLossPrice2;
     private String goodComment;
     private String badComment;
 }
