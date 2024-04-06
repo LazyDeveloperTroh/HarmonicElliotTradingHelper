@@ -1,0 +1,16 @@
+POST http://localhost:8080/plan
+Content-Type: application/json
+
+{
+  "condition": {
+    "title" : "",
+    "ticker" : "",
+    "position" : "",
+    "result" : "",
+    "createdBy" : ""
+  },
+  "pageable" : {
+    "pageNumber": 0,
+    "pageSize" : 10
+  }
+}
