@@ -1,5 +1,6 @@
 package com.heth.harmonicelliottradinghelper.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
@@ -21,11 +22,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public abstract class BaseEntity {
     @CreatedBy
+    @Column(nullable = false)
     private String createdBy;
+
     @CreatedDate
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+
     @LastModifiedBy
+    @Column(nullable = false)
     private String modifiedBy;
+
     @LastModifiedDate
+    @Column(nullable = false)
     private LocalDateTime modifiedAt;
 }

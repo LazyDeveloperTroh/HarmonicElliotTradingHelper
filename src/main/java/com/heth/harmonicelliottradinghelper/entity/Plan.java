@@ -1,9 +1,6 @@
 package com.heth.harmonicelliottradinghelper.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +15,19 @@ public class Plan extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private String ticker;
+
+    @Column(nullable = false)
     private String position;
+
+    @Column(nullable = false)
     private String result;
+
     private Double entryPrice1;
     private Double entryPrice2;
     private Double targetPrice1;

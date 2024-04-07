@@ -1,0 +1,18 @@
+POST http://localhost:8080/plan
+Content-Type: application/json
+
+{
+  "title": "ETHUSDT 3000$ LONG 전략",
+  "ticker": "ETHUSDT",
+  "position": "LONG",
+  "result": "WIN",
+  "entryPrice1": 3000,
+  "entryPrice2": null,
+  "targetPrice1": 3200,
+  "targetPrice2": null,
+  "targetPrice3": null,
+  "stopLossPrice1": null,
+  "stopLossPrice2": null,
+  "goodComment": "다이버전스 좋았다",
+  "badComment": "5m 다이버전스 확인없이 빠르게 진입했던게 아쉬움"
+}

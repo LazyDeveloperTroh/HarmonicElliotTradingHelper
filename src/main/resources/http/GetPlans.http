@@ -1,4 +1,4 @@
-POST http://localhost:8080/plan
+POST http://localhost:8080/plan/search
 Content-Type: application/json
 
 {

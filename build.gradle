@@ -41,6 +41,9 @@ dependencies {
     // h2 설정
     runtimeOnly 'com.h2database:h2'
 
+    // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+    implementation 'org.modelmapper:modelmapper:3.1.1'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
