@@ -39,7 +39,11 @@ public class PlanRepositoryImpl extends QuerydslRepositorySupport implements Cus
                 plan.stopLossPrice1,
                 plan.stopLossPrice2,
                 plan.goodComment,
-                plan.badComment
+                plan.badComment,
+                plan.createdBy,
+                plan.createdAt,
+                plan.modifiedBy,
+                plan.modifiedAt
         );
     }
 

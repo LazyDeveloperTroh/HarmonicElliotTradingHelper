@@ -1,0 +1,1 @@
+export const GET_PLAN_PATH = '/plan/search'

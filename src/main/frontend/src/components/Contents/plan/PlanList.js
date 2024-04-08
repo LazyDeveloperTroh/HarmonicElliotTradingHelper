@@ -1,67 +1,48 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {
+    Button,
+    Grid,
+    IconButton,
+    InputLabel,
+    MenuItem,
     Paper,
+    Select,
+    TableBody,
+    TableCell,
     TableContainer,
     TableHead,
-    TableRow,
-    TableCell,
-    TableBody,
     TablePagination,
-    InputLabel, Select, MenuItem, Button, IconButton, Grid
+    TableRow
 } from "@mui/material";
 import FormControl from '@mui/material/FormControl';
 import EditIcon from '@mui/icons-material/Edit';
-import SearchIcon from '@mui/icons-material/Search';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import dayjs from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {useNavigate} from "react-router-dom";
-import TradingPrinciple from "../TradingPrinciple";
-import TradingTips from "../TradingTips";
+import axios from "axios";
+import {GET_PLAN_PATH} from "configuration/ApiPath";
+import {format} from "date-fns";
+import {ko} from "date-fns/locale";
+import {NumericFormat} from "react-number-format";
 
 
 const columns =[
-    {id: 'no', label: 'NO', width: '5%'},
-    {id: 'result', label: '결과', width: '5%'},
-    {id: 'ticker', label: '종목', width: '5%'},
-    {id: 'title', label: '제목', width: '15%'},
-    {id: 'basis', label: '매매 근거', width: '10%'},
-    {id: 'plan', label: '매매 계획', width: '20%'},
-    {id: 'review', label: '복기 내용', width: '20%'},
-    {id: 'created', label: '생성일', width: '7%'},
-    {id: 'modified', label: '종료일', width: '7%'}
+    {id: 'id', label: 'NO', width: '3%'},
+    {id: 'title', label: '제목', width: '14%'},
+    {id: 'ticker', label: '종목', width: '3%'},
+    {id: 'position', label: '포지션', width: '5%'},
+    {id: 'entryPrice', label: '진입', width: '6%'},
+    {id: 'targetPrice', label: '목표', width: '6%'},
+    {id: 'stopLossPrice', label: '손절', width: '6%'},
+    {id: 'goodComment', label: '잘한점', width: '15%'},
+    {id: 'badComment', label: '개선점', width: '15%'},
+    {id: 'createdAt', label: '생성일', width: '11%'},
+    {id: 'modifiedAt', label: '종료일', width: '11%'}
 ]
-
-function createData(no,result,ticker,title, basis, plan, review, created, modified) {
-    return {no,result,ticker,title, basis, plan, review, created, modified};
-}
-
-const rows = [
-    createData('1', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다111', '2024-03-01', '2024-03-12'),
-    createData('2', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다222', '2024-03-01', '2024-03-12'),
-    createData('3', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('4', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('5', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('6', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('7', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('8', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('9', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('10', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('11', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('12', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('13', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('14', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('15', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('16', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('17', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('18', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('19', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('20', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-    createData('21', '승', 'BTCUSDT', '2024-03-09 매매계획', '다이버전스, 파동', '63000$ 반익절', '복기합니다333', '2024-03-01', '2024-03-12'),
-];
 
 function PlanList() {
     const [page, setPage] = React.useState(0);
@@ -71,6 +52,18 @@ function PlanList() {
     const [startDate, setStartDate] = React.useState(dayjs('2022-04-17'));
     const [endDate, setEndDate] = React.useState(dayjs('2022-04-17'));
     const navigate = useNavigate();
+
+    const [planList, setPlanList] = useState([]);
+    useEffect(() => {
+        axios.post(GET_PLAN_PATH, {})
+            .then((response) => {
+                console.log(response);
+                setPlanList(response.data.data.content);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, [])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -88,6 +81,10 @@ function PlanList() {
     }
     const handleAddBtn = () => {
         navigate("/plans/add");
+    }
+
+    const dateFormat = (date) => {
+        return format(new Date(date), 'PPP EEE p', {locale: ko});
     }
 
     return (
@@ -173,22 +170,31 @@ function PlanList() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows
+                            {planList
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row) => {
+                                .map((plan) => {
                                     return (
-                                        <TableRow hover role={"checkbox"} tabIndex={-1} key={row.code}>
-                                            {columns.map((column) => {
-                                                const value = row[column.id];
-                                                return (
-                                                    <TableCell key={column.id} align={column.align}>
-                                                        {value}
-                                                    </TableCell>
-                                                )
-                                            })}
+                                        <TableRow hover role={"checkbox"} tabIndex={-1} key={plan.id}>
+                                            <TableCell>{plan.id}</TableCell>
+                                            <TableCell>{plan.title}</TableCell>
+                                            <TableCell>{plan.ticker}</TableCell>
+                                            <TableCell>{plan.position}</TableCell>
+                                            <TableCell>
+                                                <NumericFormat value={plan.entryPrice1} displayType={'text'} thousandSeparator={true} thousandSeparator="," prefix={'$'}/>
+                                            </TableCell>
+                                            <TableCell>
+                                                <NumericFormat value={plan.targetPrice1} displayType={'text'} thousandSeparator={true} thousandSeparator="," prefix={'$'}/>
+                                            </TableCell>
+                                            <TableCell>
+                                                <NumericFormat value={plan.stopLossPrice1} displayType={'text'} thousandSeparator={true} thousandSeparator="," prefix={'$'}/>
+                                            </TableCell>
+                                            <TableCell>{plan.goodComment}</TableCell>
+                                            <TableCell>{plan.badComment}</TableCell>
+                                            <TableCell>{dateFormat(plan.createdAt)}</TableCell>
+                                            <TableCell>{dateFormat(plan.modifiedAt)}</TableCell>
                                             <TableCell align={"center"}><EditIcon/></TableCell>
                                         </TableRow>
-                                    )
+                                    );
                                 })
                             }
                         </TableBody>
@@ -196,7 +202,7 @@ function PlanList() {
                     <TablePagination
                         rowsPerPageOption={[10, 25, 100]}
                         component="div"
-                        count={rows.length}
+                        count={planList.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

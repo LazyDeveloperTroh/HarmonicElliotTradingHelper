@@ -1,7 +1,6 @@
 package com.heth.harmonicelliottradinghelper.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class PlanDto {
     private Long id;
@@ -31,9 +29,8 @@ public class PlanDto {
     private LocalDateTime createdAt;
     private String modifiedBy;
     private LocalDateTime modifiedAt;
-
     @QueryProjection
-    public PlanDto(Long id, String title, String ticker, String position, String result, Double entryPrice1, Double entryPrice2, Double targetPrice1, Double targetPrice2, Double targetPrice3, Double stopLossPrice1, Double stopLossPrice2, String goodComment, String badComment) {
+    public PlanDto(Long id, String title, String ticker, String position, String result, Double entryPrice1, Double entryPrice2, Double targetPrice1, Double targetPrice2, Double targetPrice3, Double stopLossPrice1, Double stopLossPrice2, String goodComment, String badComment, String createdBy, LocalDateTime createdAt, String modifiedBy, LocalDateTime modifiedAt) {
         this.id = id;
         this.title = title;
         this.ticker = ticker;
@@ -48,5 +45,9 @@ public class PlanDto {
         this.stopLossPrice2 = stopLossPrice2;
         this.goodComment = goodComment;
         this.badComment = badComment;
+        this.createdBy = createdBy;
+        this.createdAt = createdAt;
+        this.modifiedBy = modifiedBy;
+        this.modifiedAt = modifiedAt;
     }
 }

@@ -22,3 +22,6 @@ create table plan
     modified_at      timestamp(6) not null,
     primary key (id)
 );
+
+update plan set created_at=now();
+select * from plan;
