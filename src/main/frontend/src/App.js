@@ -7,22 +7,8 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import PlanList from "./components/Contents/plan/PlanList";
 import Plan from "./components/Contents/plan/Plan";
 import {Grid} from "@mui/material";
-import axios from "axios";
-import {useEffect, useState} from "react";
 
 function App() {
-    const [message, setMessage] = useState("");
-    useEffect(() => {
-        axios.get("/api/test")
-            .then((response) => {
-                setMessage(response.data);
-                console.log(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }, [])
-
     return (
       <BrowserRouter>
           <div className="App">

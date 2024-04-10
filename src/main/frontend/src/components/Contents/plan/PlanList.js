@@ -6,7 +6,7 @@ import {
     InputLabel,
     MenuItem,
     Paper,
-    Select,
+    Select, Table,
     TableBody,
     TableCell,
     TableContainer,
@@ -92,20 +92,20 @@ function PlanList() {
             <Grid container spacing={2} height={"10%"}>
                 <Grid item md={12}>
                     <form>
-                        <div style={{display: "flex", gap: "1rem", alignItems: "baseline", }}>
-                            <FormControl >
+                        <div style={{display: "flex", gap: "1rem", alignItems: "baseline",}}>
+                            <FormControl>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer components={['DatePicker', 'DatePicker']}>
                                         <DatePicker
                                             label="Start Date"
                                             value={startDate}
-                                            slotProps={{textField: {size : 'small'}}}
+                                            slotProps={{textField: {size: 'small'}}}
                                             onChange={(newValue) => setStartDate(newValue)}
                                         />
                                         <DatePicker
                                             label="End Date"
                                             value={endDate}
-                                            slotProps={{textField: {size : 'small'}}}
+                                            slotProps={{textField: {size: 'small'}}}
                                             onChange={(newValue) => setEndDate(newValue)}
                                         />
                                     </DemoContainer>
@@ -127,7 +127,7 @@ function PlanList() {
                                 </Select>
                             </FormControl>
 
-                            <FormControl size={"small"} sx={{minWidth: 120 }} >
+                            <FormControl size={"small"} sx={{minWidth: 120}}>
                                 <InputLabel id="demo-simple-select-helper-label" shrink={true}>결과</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-autowidth-label"
@@ -151,56 +151,64 @@ function PlanList() {
                 </Grid>
                 <Grid item md={12}>
                     <TableContainer>
-                        <TableHead>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <TableCell
-                                        key={column.id}
-                                        align={column.align}
-                                        style={{width: column.width, fontWeight: "bold"}}
-                                    >
-                                        {column.label}
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    {columns.map((column) => (
+                                        <TableCell
+                                            key={column.id}
+                                            align={column.align}
+                                            style={{width: column.width, fontWeight: "bold"}}
+                                        >
+                                            {column.label}
+                                        </TableCell>
+                                    ))}
+                                    <TableCell align={"center"}>
+                                        <IconButton onClick={handleAddBtn}>
+                                            <AddCircleIcon sx={{color: "#2196f3", verticalAlign: "middle"}}/>
+                                        </IconButton>
                                     </TableCell>
-                                ))}
-                                <TableCell align={"center"}>
-                                    <IconButton onClick={handleAddBtn}>
-                                        <AddCircleIcon sx={{color:"#2196f3", verticalAlign: "middle"}}/>
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {planList
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((plan) => {
-                                    return (
-                                        <TableRow hover role={"checkbox"} tabIndex={-1} key={plan.id}>
-                                            <TableCell>{plan.id}</TableCell>
-                                            <TableCell>{plan.title}</TableCell>
-                                            <TableCell>{plan.ticker}</TableCell>
-                                            <TableCell>{plan.position}</TableCell>
-                                            <TableCell>
-                                                <NumericFormat value={plan.entryPrice1} displayType={'text'} thousandSeparator={true} thousandSeparator="," prefix={'$'}/>
-                                            </TableCell>
-                                            <TableCell>
-                                                <NumericFormat value={plan.targetPrice1} displayType={'text'} thousandSeparator={true} thousandSeparator="," prefix={'$'}/>
-                                            </TableCell>
-                                            <TableCell>
-                                                <NumericFormat value={plan.stopLossPrice1} displayType={'text'} thousandSeparator={true} thousandSeparator="," prefix={'$'}/>
-                                            </TableCell>
-                                            <TableCell>{plan.goodComment}</TableCell>
-                                            <TableCell>{plan.badComment}</TableCell>
-                                            <TableCell>{dateFormat(plan.createdAt)}</TableCell>
-                                            <TableCell>{dateFormat(plan.modifiedAt)}</TableCell>
-                                            <TableCell align={"center"}><EditIcon/></TableCell>
-                                        </TableRow>
-                                    );
-                                })
-                            }
-                        </TableBody>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {planList
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((plan) => {
+                                        return (
+                                            <TableRow hover role={"checkbox"} tabIndex={-1} key={plan.id}>
+                                                <TableCell>{plan.id}</TableCell>
+                                                <TableCell>{plan.title}</TableCell>
+                                                <TableCell>{plan.ticker}</TableCell>
+                                                <TableCell>{plan.position}</TableCell>
+                                                <TableCell>
+                                                    <NumericFormat value={plan.entryPrice1} displayType={'text'}
+                                                                   thousandSeparator={true}
+                                                                   prefix={'$'}/>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <NumericFormat value={plan.targetPrice1} displayType={'text'}
+                                                                   thousandSeparator={true}
+                                                                   prefix={'$'}/>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <NumericFormat value={plan.stopLossPrice1} displayType={'text'}
+                                                                   thousandSeparator={true}
+                                                                   prefix={'$'}/>
+                                                </TableCell>
+                                                <TableCell>{plan.goodComment}</TableCell>
+                                                <TableCell>{plan.badComment}</TableCell>
+                                                <TableCell>{dateFormat(plan.createdAt)}</TableCell>
+                                                <TableCell>{dateFormat(plan.modifiedAt)}</TableCell>
+                                                <TableCell align={"center"}><EditIcon/></TableCell>
+                                            </TableRow>
+                                        );
+                                    })
+                                }
+                            </TableBody>
+                        </Table>
                     </TableContainer>
                     <TablePagination
-                        rowsPerPageOption={[10, 25, 100]}
+                        rowsPerPageOptions={[10, 25, 50, 100]}
                         component="div"
                         count={planList.length}
                         rowsPerPage={rowsPerPage}
@@ -212,7 +220,7 @@ function PlanList() {
 
             </Grid>
         </Paper>
-    )
+    );
 }
 
 export default PlanList;
