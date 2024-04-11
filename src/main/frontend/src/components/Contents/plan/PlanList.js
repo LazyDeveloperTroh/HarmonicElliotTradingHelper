@@ -44,20 +44,19 @@ const columns =[
     {id: 'modifiedAt', label: '종료일', width: '11%'}
 ]
 
+
 function PlanList() {
     const [page, setPage] = React.useState(0);
     const [ticker, setTicker] = React.useState('BTCUSDT');
     const [result, setResult] = React.useState('');
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [startDate, setStartDate] = React.useState(dayjs('2022-04-17'));
-    const [endDate, setEndDate] = React.useState(dayjs('2022-04-17'));
+    const [startDate, setStartDate] = React.useState(dayjs());
+    const [endDate, setEndDate] = React.useState(dayjs());
     const navigate = useNavigate();
-
     const [planList, setPlanList] = useState([]);
     useEffect(() => {
         axios.post(GET_PLAN_PATH, {})
             .then((response) => {
-                console.log(response);
                 setPlanList(response.data.data.content);
             })
             .catch((error) => {
@@ -83,6 +82,20 @@ function PlanList() {
         navigate("/plans/add");
     }
 
+    const onClickSearch = () => {
+        axios.post(GET_PLAN_PATH, {
+            ticker: ticker,
+            startDate: startDate.format("YYYY-MM-DD"),
+            endDate: endDate.format("YYYY-MM-DD"),
+            result: result
+        }).then((response) => {
+            console.log(response.data.data.content)
+            setPlanList(response.data.data.content);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
     const dateFormat = (date) => {
         return format(new Date(date), 'PPP EEE p', {locale: ko});
     }
@@ -98,15 +111,17 @@ function PlanList() {
                                     <DemoContainer components={['DatePicker', 'DatePicker']}>
                                         <DatePicker
                                             label="Start Date"
+                                            format={"YYYY-MM-DD"}
                                             value={startDate}
                                             slotProps={{textField: {size: 'small'}}}
-                                            onChange={(newValue) => setStartDate(newValue)}
+                                            onChange={(date) => setStartDate(date)}
                                         />
                                         <DatePicker
                                             label="End Date"
+                                            format={"YYYY-MM-DD"}
                                             value={endDate}
                                             slotProps={{textField: {size: 'small'}}}
-                                            onChange={(newValue) => setEndDate(newValue)}
+                                            onChange={(date) => setEndDate(date)}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
@@ -144,7 +159,7 @@ function PlanList() {
                             </FormControl>
 
                             <FormControl>
-                                <Button variant="contained">검색</Button>
+                                <Button variant="contained" onClick={onClickSearch}>검색</Button>
                             </FormControl>
                         </div>
                     </form>

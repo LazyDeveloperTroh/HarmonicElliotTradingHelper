@@ -6,12 +6,7 @@ spring:
     password:
   jpa:
     generate-ddl: true
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
-        use_sql_comments: true
-        show_sql: true
-    show-sql: true
     defer-datasource-initialization: true
+logging:
+  level:
+    p6spy: info

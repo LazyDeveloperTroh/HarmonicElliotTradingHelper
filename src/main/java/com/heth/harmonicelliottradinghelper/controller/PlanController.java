@@ -17,6 +17,7 @@ public class PlanController {
     private final PlanService planService;
     @PostMapping("/search")
     public GeneralResponse<Page<PlanDto>> getPlans(@RequestBody PlanSearchCondition condition, Pageable pageable) {
+        log.info("# 매매일지 검색요청. param: "+condition);
         Page<PlanDto> plans = planService.getPlans(condition, pageable);
         return GeneralResponse.success(plans);
     }

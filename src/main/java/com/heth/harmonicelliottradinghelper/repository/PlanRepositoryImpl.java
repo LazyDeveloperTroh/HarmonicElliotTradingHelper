@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.springframework.util.StringUtils.hasText;
@@ -56,7 +58,7 @@ public class PlanRepositoryImpl extends QuerydslRepositorySupport implements Cus
                         tickerEq(condition.getTicker()),
                         positionEq(condition.getPosition()),
                         resultEq(condition.getResult()),
-                        createdByEq(condition.getCreatedBy()))
+                        createdAtByRange(condition.getStartDate(), condition.getEndDate()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -68,7 +70,7 @@ public class PlanRepositoryImpl extends QuerydslRepositorySupport implements Cus
                         tickerEq(condition.getTicker()),
                         positionEq(condition.getPosition()),
                         resultEq(condition.getResult()),
-                        createdByEq(condition.getCreatedBy()))
+                        createdAtByRange(condition.getStartDate(), condition.getEndDate()))
                 .fetchOne();
 
         return new PageImpl<>(contents, pageable, count == null ? 0 : count);
@@ -87,7 +89,12 @@ public class PlanRepositoryImpl extends QuerydslRepositorySupport implements Cus
     private BooleanExpression resultEq(String result) {
         return hasText(result) ? plan.result.eq(result) : null;
     }
-    private BooleanExpression createdByEq(String createdBy) {
-        return hasText(createdBy) ? plan.createdBy.eq(createdBy) : null;
+    private BooleanExpression createdAtByRange(String startDate, String endDate) {
+        LocalDate startDateTime = hasText(startDate) ?
+                LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")) : LocalDate.now();
+        LocalDate endDateTime = hasText(endDate) ?
+                LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")) :  LocalDate.now();
+        return plan.createdAt.between(startDateTime.atTime(0, 0, 0),
+                endDateTime.atTime(23, 59, 59));
     }
 }
