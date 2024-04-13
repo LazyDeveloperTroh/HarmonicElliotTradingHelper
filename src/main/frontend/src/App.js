@@ -16,7 +16,7 @@ function App() {
                   <Grid item container columns={14} height={"8%"}>
                       <Header></Header>
                   </Grid>
-                  <Grid item container height={"92%"} columns={14} spacing={1}>
+                  <Grid item container height={"90%"} columns={14} spacing={1}>
                       <Grid item md={2}>
                           <Sidebar></Sidebar>
                       </Grid>
@@ -33,5 +33,4 @@ function App() {
       </BrowserRouter>
   )
 }
-
 export default App;
