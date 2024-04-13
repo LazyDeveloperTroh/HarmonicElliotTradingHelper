@@ -44,16 +44,19 @@ const columns =[
     {id: 'modifiedAt', label: '종료일', width: '11%'}
 ]
 
+const tableHeadStyle = {height: "40px", padding: 10, fontWeight: "bold"}
+const tableDataStyle = {height: "40px", padding: 5}
 
 function PlanList() {
     const [page, setPage] = React.useState(0);
     const [ticker, setTicker] = React.useState('BTCUSDT');
     const [result, setResult] = React.useState('');
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [startDate, setStartDate] = React.useState(dayjs());
+    const [startDate, setStartDate] = React.useState(dayjs().set("D", 1));
     const [endDate, setEndDate] = React.useState(dayjs());
     const navigate = useNavigate();
     const [planList, setPlanList] = useState([]);
+
     useEffect(() => {
         axios.post(GET_PLAN_PATH, {})
             .then((response) => {
@@ -99,7 +102,6 @@ function PlanList() {
     const dateFormat = (date) => {
         return format(new Date(date), 'PPP EEE p', {locale: ko});
     }
-
     return (
         <Paper sx={{height: "100%", padding: "inherit"}}>
             <Grid container spacing={2} height={"10%"}>
@@ -167,18 +169,19 @@ function PlanList() {
                 <Grid item md={12}>
                     <TableContainer>
                         <Table>
-                            <TableHead>
+                            <TableHead >
                                 <TableRow>
                                     {columns.map((column) => (
                                         <TableCell
                                             key={column.id}
                                             align={column.align}
                                             style={{width: column.width, fontWeight: "bold"}}
+                                            style={tableHeadStyle}
                                         >
                                             {column.label}
                                         </TableCell>
                                     ))}
-                                    <TableCell align={"center"}>
+                                    <TableCell align={"center"} style={tableHeadStyle}>
                                         <IconButton onClick={handleAddBtn}>
                                             <AddCircleIcon sx={{color: "#2196f3", verticalAlign: "middle"}}/>
                                         </IconButton>
@@ -191,30 +194,30 @@ function PlanList() {
                                     .map((plan) => {
                                         return (
                                             <TableRow hover role={"checkbox"} tabIndex={-1} key={plan.id}>
-                                                <TableCell>{plan.id}</TableCell>
-                                                <TableCell>{plan.title}</TableCell>
-                                                <TableCell>{plan.ticker}</TableCell>
-                                                <TableCell>{plan.position}</TableCell>
-                                                <TableCell>
+                                                <TableCell style={tableDataStyle}>{plan.id}</TableCell>
+                                                <TableCell style={tableDataStyle}>{plan.title}</TableCell>
+                                                <TableCell style={tableDataStyle}>{plan.ticker}</TableCell>
+                                                <TableCell style={tableDataStyle}>{plan.position}</TableCell>
+                                                <TableCell style={tableDataStyle}>
                                                     <NumericFormat value={plan.entryPrice1} displayType={'text'}
                                                                    thousandSeparator={true}
                                                                    prefix={'$'}/>
                                                 </TableCell>
-                                                <TableCell>
+                                                <TableCell style={tableDataStyle}>
                                                     <NumericFormat value={plan.targetPrice1} displayType={'text'}
                                                                    thousandSeparator={true}
                                                                    prefix={'$'}/>
                                                 </TableCell>
-                                                <TableCell>
+                                                <TableCell style={tableDataStyle}>
                                                     <NumericFormat value={plan.stopLossPrice1} displayType={'text'}
                                                                    thousandSeparator={true}
                                                                    prefix={'$'}/>
                                                 </TableCell>
-                                                <TableCell>{plan.goodComment}</TableCell>
-                                                <TableCell>{plan.badComment}</TableCell>
-                                                <TableCell>{dateFormat(plan.createdAt)}</TableCell>
-                                                <TableCell>{dateFormat(plan.modifiedAt)}</TableCell>
-                                                <TableCell align={"center"}><EditIcon/></TableCell>
+                                                <TableCell style={tableDataStyle}>{plan.goodComment}</TableCell>
+                                                <TableCell style={tableDataStyle}>{plan.badComment}</TableCell>
+                                                <TableCell style={tableDataStyle}>{dateFormat(plan.createdAt)}</TableCell>
+                                                <TableCell style={tableDataStyle}>{dateFormat(plan.modifiedAt)}</TableCell>
+                                                <TableCell style={tableDataStyle} align={"center"}><EditIcon/></TableCell>
                                             </TableRow>
                                         );
                                     })
