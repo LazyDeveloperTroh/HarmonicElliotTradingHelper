@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import {
     Button,
     Checkbox,
@@ -16,7 +17,6 @@ import {
 } from "@mui/material";
 import ChartExplainList from "./chart/ChartExplainList";
 import './Plan.css';
-import {useState} from "react";
 import ChartInfoDialog from "./chart/ChartInfoDialog";
 
 function Plan() {
@@ -33,23 +33,35 @@ function Plan() {
         {name: "캔들",code: "CANDLE", check: false}
     ]);
     const [result, setResult] = useState('WAITING');
+    const [scenarioList, setScenarioList] = useState([{chartInfoList: []}]);
     const [tickerOpen, setTickerOpen] = useState(false);
     const [positionOpen, setPositionOpen] = useState(false);
 
     // modal 차트상세정보
     const [chartDetailOpen, setChartDetailOpen] = useState(false);
     const [chartDetail, setChartDetail] = useState({});
+
+    /**
+     * 시나리오 추가 함수
+     */
+    const addScenario = () => {
+        setScenarioList([...scenarioList, {chartInfoList: []}])
+    }
+
+    /**
+     *
+     * @param newChartDetail
+     */
     const handleChartDetail = (newChartDetail) => {
-        setChartDetail(newChartDetail)
-        let newChartInfoList = []
-        for (let i = 0; i < chartInfoList.length; i++) {
-            if(chartInfoList[i].id === newChartDetail.id) {
-                newChartInfoList.push(newChartDetail);
-            } else {
-                newChartInfoList.push(chartInfoList[i])
-            }
+        setChartDetail(newChartDetail);
+        let newScenarioList = []
+        for (let i = 0; i < scenarioList.length; i++) {
+            let chartInfoList = scenarioList[i].chartInfoList;
+            newScenarioList.push(
+                {"chartInfoList": chartInfoList.map((chartInfo) => chartInfo.id !== newChartDetail.id ? chartInfo : newChartDetail)}
+            )
         }
-        setChartInfoList(newChartInfoList);
+        setScenarioList(newScenarioList);
     }
     const handlerChartDetail = (id, title, img, desc) => {
         setChartDetailOpen(true);
@@ -65,10 +77,6 @@ function Plan() {
         setChartDetail({});
     }
 
-    // 차트정보 리스트
-    const [chartInfoList, setChartInfoList] = useState([]);
-    const handleChartInfoList = (chartInfoList) => setChartInfoList(chartInfoList);
-
     const save = () => {
         console.log(title);
         console.log(ticker);
@@ -81,7 +89,10 @@ function Plan() {
     return (
         <Paper component={"form"} elevation={3} sx={{height: "98%", padding: "inherit"}}>
             <div className={"float-button-container"}>
-                <Button variant="contained" onClick={save}>저장하기</Button>
+                <Grid container spacing={2}>
+                    <Grid item><Button variant="contained" onClick={addScenario}>시나리오 추가</Button></Grid>
+                    <Grid item><Button variant="contained" onClick={save}>저장하기</Button></Grid>
+                </Grid>
             </div>
             <Grid container spacing={2}>
                 <Grid item md={9}>
@@ -171,15 +182,21 @@ function Plan() {
                         </RadioGroup>
                     </Grid>
                 </Grid>
-                <Grid item md={12}>
-                    <ChartExplainList title={"매매 계획"}
-                                      chartInfoList={chartInfoList}
-                                      handleChartInfoList={handleChartInfoList}
-                                      handlerChartDetail={handlerChartDetail}/>
-                </Grid>
-                <Grid item md={12}>
-                    {/*<ChartExplainList title={"매매 실행"}/>*/}
-                </Grid>
+                {scenarioList.map((scenario, index) => (
+                    <Grid item md={12}>
+                        <ChartExplainList title={"매매 시나리오 "+(index+1)}
+                                          chartInfoList={scenario.chartInfoList}
+                                          handleChartInfoList={(newChartInfoList) => {
+                                              if(newChartInfoList.length == 0) {
+                                                  setScenarioList(scenarioList.filter((scenario, i) => i !== index));
+                                              } else {
+                                                  setScenarioList(scenarioList.map((scenario, i) => i !== index ?
+                                                      scenario : {chartInfoList: newChartInfoList}));
+                                              }
+                                          }}
+                                          handlerChartDetail={handlerChartDetail}/>
+                    </Grid>
+                ))}
                 <Grid item container md={12}>
                     <Grid item md={4}>
                         <TextField
@@ -279,8 +296,8 @@ function Plan() {
             <ChartInfoDialog
                 open={chartDetailOpen}
                 handleClose={handleChartDetailClose}
-                chartDetail = {chartDetail}
-                handleChartDetail = {handleChartDetail}/>
+                chartDetail={chartDetail}
+                handleChartDetail={handleChartDetail}/>
         </Paper>
     );
 }
