@@ -1,25 +1,14 @@
 import * as React from 'react';
-import {Box, Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, TextField} from "@mui/material";
+import {Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, TextField} from "@mui/material";
 import "./ChartExplainList.css";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import {Modal} from "@mui/base";
 import DragFileUpload from "../../../Util/DragFileUpload";
 
-function ChartExplainList({title}) {
-    const [open, setOpen] = React.useState(false);
-    const [expandImageSrc, setExpandImageSrc] = React.useState("");
-    const [itemData, setItemData] = React.useState([]);
-
-    const handleOpen = function(imgSrc) {
-        setOpen(true);
-        setExpandImageSrc(imgSrc)
-    };
-    const handleClose = () => setOpen(false);
-
+function ChartExplainList({title, chartInfoList, handleChartInfoList, handlerChartDetail}) {
     const onRemove = (event, id) => {
         event.stopPropagation();
-        setItemData(
-            itemData.filter(item => {
+        handleChartInfoList(
+            chartInfoList.filter(item => {
                 return item.id !== id;})
         )
     }
@@ -31,12 +20,17 @@ function ChartExplainList({title}) {
         let uploadFiles = [];
         Array.from(event.dataTransfer.files).map((file) => {
             uploadFiles.push({
-                id: file.name,
+                id: crypto.randomUUID(),
+                title: '',
                 img: URL.createObjectURL(file),
-                title: file.name
+                desc: ''
             })
         })
-        setItemData([...itemData, ...uploadFiles]);
+        handleChartInfoList([...chartInfoList, ...uploadFiles]);
+    }
+
+    const handleBlur = (event) => {
+        alert(event.target.value)
     }
 
     return <div>
@@ -49,75 +43,47 @@ function ChartExplainList({title}) {
                     gridTemplateRows: "300px !important",
                     gridAutoColumns: "minmax(300px, 1fr)"
                 }}>
-                    {itemData.map((item) => (
-                        <ImageListItem key={item.id} className={"chartItem"} onClick={() => handleOpen(item.img)}>
+                    {chartInfoList.map((chart) => (
+                        <ImageListItem key={chart.id} className={"chartItem"}
+                                       onClick={() => handlerChartDetail(chart.id, chart.title, chart.img, chart.desc)}>
                             <img
-                                src={item.img}
-                                alt={item.title}
+                                src={chart.img}
+                                alt={chart.title}
                                 loading="lazy"
                                 style={{cursor: "pointer", borderRadius: "4px"}}
                             />
                             <ImageListItemBar
-                                title={item.title}
-                                subtitle={item.author}
+                                title={chart.title}
                                 actionIcon={
                                     <IconButton
                                         sx={{color: 'rgba(255, 255, 255, 0.54)'}}
-                                        aria-label={`info about ${item.title}`}
+                                        aria-label={`info about ${chart.title}`}
                                     >
                                         <RemoveCircleOutlineIcon onClick={(event) => {
-                                            onRemove(event, item.id)
+                                            onRemove(event, chart.id)
                                         }}/>
                                     </IconButton>
                                 }
                             />
                         </ImageListItem>
                     ))}
-                    <ImageListItem key={""} >
-                        <DragFileUpload onChange={addChart} />
+                    <ImageListItem key={""}>
+                        <DragFileUpload onChange={addChart}/>
                     </ImageListItem>
                 </ImageList>
             </Grid>
             <Grid item md={3}>
                 <div style={{padding: "1rem 1rem"}}>
                     <TextField
-                        id="outlined-multiline-static"
                         label="참고"
                         multiline
                         fullWidth
                         rows={13}
+                        onBlur={handleBlur}
                     />
                 </div>
             </Grid>
         </Grid>
-        <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <Box sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: "90%",
-                height: "90%",
-                bgcolor: 'background.paper',
-                boxShadow: 24,
-                p: 1,
-                zIndex: 2
-            }}>
-                <img
-                    id={"expandImage"}
-                    src={expandImageSrc}
-                    width={"100%"}
-                    height={"100%"}
-                    alt={""}
-                    loading="lazy"
-                />
-            </Box>
-        </Modal>
     </div>;
 }
 

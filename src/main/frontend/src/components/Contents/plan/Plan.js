@@ -17,6 +17,7 @@ import {
 import ChartExplainList from "./chart/ChartExplainList";
 import './Plan.css';
 import {useState} from "react";
+import ChartInfoDialog from "./chart/ChartInfoDialog";
 
 function Plan() {
     const [title, setTitle] = useState("");
@@ -32,9 +33,42 @@ function Plan() {
         {name: "캔들",code: "CANDLE", check: false}
     ]);
     const [result, setResult] = useState('WAITING');
-
     const [tickerOpen, setTickerOpen] = useState(false);
     const [positionOpen, setPositionOpen] = useState(false);
+
+    // modal 차트상세정보
+    const [chartDetailOpen, setChartDetailOpen] = useState(false);
+    const [chartDetail, setChartDetail] = useState({});
+    const handleChartDetail = (newChartDetail) => {
+        setChartDetail(newChartDetail)
+        let newChartInfoList = []
+        for (let i = 0; i < chartInfoList.length; i++) {
+            if(chartInfoList[i].id === newChartDetail.id) {
+                newChartInfoList.push(newChartDetail);
+            } else {
+                newChartInfoList.push(chartInfoList[i])
+            }
+        }
+        setChartInfoList(newChartInfoList);
+    }
+    const handlerChartDetail = (id, title, img, desc) => {
+        setChartDetailOpen(true);
+        setChartDetail({
+            "id": id,
+            "title": title,
+            "img": img,
+            "desc": desc
+        })
+    }
+    const handleChartDetailClose = () => {
+        setChartDetailOpen(false);
+        setChartDetail({});
+    }
+
+    // 차트정보 리스트
+    const [chartInfoList, setChartInfoList] = useState([]);
+    const handleChartInfoList = (chartInfoList) => setChartInfoList(chartInfoList);
+
     const save = () => {
         console.log(title);
         console.log(ticker);
@@ -100,24 +134,24 @@ function Plan() {
                                     key={basis.code}
                                     label={basis.name}
                                     control={<Checkbox
-                                                value={basis.code}
-                                                checked={basis.check}
-                                                onChange={(e) => {
-                                                    let newBasisList = []
-                                                    for (let i = 0; i < basisList.length; i++) {
-                                                        if(basisList[i].code !== e.target.value) {
-                                                            newBasisList.push(basisList[i])
-                                                        } else {
-                                                            newBasisList.push({
-                                                                'code': basis.code,
-                                                                'name': basis.name,
-                                                                'check': !basis.check
-                                                            });
-                                                        }
-                                                    }
-                                                    setBasisList(newBasisList);
-                                                }}
-                                            />}
+                                        value={basis.code}
+                                        checked={basis.check}
+                                        onChange={(e) => {
+                                            let newBasisList = []
+                                            for (let i = 0; i < basisList.length; i++) {
+                                                if (basisList[i].code !== e.target.value) {
+                                                    newBasisList.push(basisList[i])
+                                                } else {
+                                                    newBasisList.push({
+                                                        'code': basis.code,
+                                                        'name': basis.name,
+                                                        'check': !basis.check
+                                                    });
+                                                }
+                                            }
+                                            setBasisList(newBasisList);
+                                        }}
+                                    />}
                                 />)
                             }
                         </FormControl>
@@ -131,17 +165,20 @@ function Plan() {
                             value={result}
                             onChange={(event) => setResult(event.target.value)}
                         >
-                            <FormControlLabel control={<Radio value="WAITING" />} label="대기"/>
-                            <FormControlLabel control={<Radio value="WIN" />} label="승"/>
-                            <FormControlLabel control={<Radio value="LOSE" />} label="패"/>
+                            <FormControlLabel control={<Radio value="WAITING"/>} label="대기"/>
+                            <FormControlLabel control={<Radio value="WIN"/>} label="승"/>
+                            <FormControlLabel control={<Radio value="LOSE"/>} label="패"/>
                         </RadioGroup>
                     </Grid>
                 </Grid>
                 <Grid item md={12}>
-                    <ChartExplainList title={"매매 계획"}/>
+                    <ChartExplainList title={"매매 계획"}
+                                      chartInfoList={chartInfoList}
+                                      handleChartInfoList={handleChartInfoList}
+                                      handlerChartDetail={handlerChartDetail}/>
                 </Grid>
                 <Grid item md={12}>
-                    <ChartExplainList title={"매매 실행"}/>
+                    {/*<ChartExplainList title={"매매 실행"}/>*/}
                 </Grid>
                 <Grid item container md={12}>
                     <Grid item md={4}>
@@ -227,18 +264,23 @@ function Plan() {
                     </Grid>
                 </Grid>
                 <Grid item md={12}>
-                    <ChartExplainList title={"단기 시나리오"}/>
+                    {/*<ChartExplainList title={"단기 시나리오"}/>*/}
                 </Grid>
                 <Grid item md={12}>
-                    <ChartExplainList title={"중ㆍ단기 시나리오"}/>
+                    {/*<ChartExplainList title={"중ㆍ단기 시나리오"}/>*/}
                 </Grid>
                 <Grid item md={12}>
-                    <ChartExplainList title={"중기 시나리오"}/>
+                    {/*<ChartExplainList title={"중기 시나리오"}/>*/}
                 </Grid>
                 <Grid item md={12}>
-                    <ChartExplainList title={"장기 시나리오"}/>
+                    {/*<ChartExplainList title={"장기 시나리오"}/>*/}
                 </Grid>
-            </Grid>;
+            </Grid>
+            <ChartInfoDialog
+                open={chartDetailOpen}
+                handleClose={handleChartDetailClose}
+                chartDetail = {chartDetail}
+                handleChartDetail = {handleChartDetail}/>
         </Paper>
     );
 }
